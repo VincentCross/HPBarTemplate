@@ -131,7 +131,7 @@ think --- Command: +hp/clear ---
 
 &cmd`clear WIP=$+hp/clear:think [u(func`clear)]
 
-&func`clear WIP=[wipe(me/playerlist)][wipe(me/npclist)][wipe(me/bosslist)][u(func`msg,Player and boss lists have been cleared!)]
+&func`clear WIP=[wipe(me/playerlist)][wipe(me/npclist)][wipe(me/bosslist)][u(func`msg,All lists have been cleared!)]
 
 
 think --- Command: +hp/rules ---
