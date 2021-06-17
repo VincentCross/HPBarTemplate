@@ -162,6 +162,7 @@ think --- Command: +hp/help ---
 &func`help`credits #809=+hp/credits - Gives you lots and lots of credits to buy shiney things with.
 &func`help`note #809=+hp/note <name>=<note> - Adds a note that displays below the player/npc/boss.
 &func`help`undmg #809=+hp/undmg <name> - Remove a damage from the player/npc/boss.
+&func`help`hp #809=+hp - Simply shows what you see when you type 'look [name(me)]'
 
 
 think --- Command: +hp/credits ---
