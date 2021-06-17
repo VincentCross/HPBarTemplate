@@ -2,7 +2,7 @@
  A coded version of the HP Bar used in boss fights. To allow for easier, everyperson use.
  
 # Preview
-![Example of the HP Bar in use](Preview.png "HP Bar Preview")
+![Example of the HP Bar in use](Preview2.png "HP Bar Preview")
 
 # How To Set Up
     @create My HP Bar
