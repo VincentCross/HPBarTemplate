@@ -3,15 +3,19 @@
 
 think --- Description ---
 
-@desc WIP=[align([v(desc`playerlist`margin1)] [v(desc`playerlist`margin2)],[v(desc`playerlist`header1)]%r[u(func`playernamelist)],[v(desc`playerlist`header2)]%r[u(func`playerdmglist)])]%r%r[align([v(desc`bosslist`margin1)] [v(desc`bosslist`margin2)] [v(desc`bosslist`margin3)],[v(desc`bosslist`header1)]%r[u(func`bosslist)],[v(desc`bosslist`header2)]%r[u(func`bossdmglist)],[v(desc`bosslist`header3)]%r[u(func`bossdclist)])]%r%r[u(desc`rules)]%r%r[u(desc`help)]
+@desc WIP=[u(desc`playerlist`headers)]%r[iter(lattr(me/playerlist`*),[align([v(desc`playerlist`margin1)] [v(desc`playerlist`margin2)],[v(%i0)],[u(func`dmglist,%i0)])],%b,%r)]%r%r[u(desc`bosslist`headers)]%r[iter(lattr(me/bosslist`*),[align([v(desc`bosslist`margin1)] [v(desc`bosslist`margin2)] [v(desc`bosslist`margin3)],[v(%i0)],[u(func`dmglist,%i0)],[u(func`bossdclist,%i0)])],%b,%r)]
 
 
 think --- Description Layout ---
+
+&desc`playerlist`headers WIP=[align([v(desc`playerlist`margin1)] [v(desc`playerlist`margin2)],[v(desc`playerlist`header1)],[v(desc`playerlist`header2)])]
 
 &desc`playerlist`margin1 WIP=30
 &desc`playerlist`margin2 WIP=30
 &desc`playerlist`header1 WIP=Name
 &desc`playerlist`header2 WIP=HP
+
+&desc`bosslist`headers WIP=[align([v(desc`bosslist`margin1)] [v(desc`bosslist`margin2)] [v(desc`bosslist`margin3)],[v(desc`bosslist`header1)],[v(desc`bosslist`header2)],[v(desc`bosslist`header3)])]
 
 &desc`bosslist`margin1 WIP=30
 &desc`bosslist`margin2 WIP=30
@@ -26,12 +30,12 @@ think --- Description Layout ---
 
 think --- Description Data Pull ---
 
-&func`playernamelist WIP=[iter(lattr(me/playerlist`*),v(%i0),%b,%r)]
-&func`playerdmglist WIP=[iter(lattr(me/playerlist`*),[iter(lattr(me/%i0`hp`),[switch(v(%i0),O,\[[ansi(gh,O)]\],\[[ansi(rh,X)]\])])],%b,%r)]
+&func`dmglist WIP=[iter(lattr(me/%0`hp`),[switch(v(%i0),O,\[[ansi(gh,O)]\],\[[ansi(rh,X)]\])])]
+
+&func`playernamelist WIP=[iter(lattr(me/playerlist`*),v(%i0))]
 
 &func`bosslist WIP=[iter(lattr(me/bosslist`*),v(%i0),%b,%r)]
-&func`bossdmglist WIP=[iter(lattr(me/bosslist`*),[iter(lattr(me/%i0`hp`),[switch(v(%i0),O,\[[ansi(gh,O)]\],\[[ansi(rh,X)]\])])],%b,%r)]
-&func`bossdclist WIP=[iter(lattr(me/bosslist`*),[v(%i0`dc`def)] / [v(%i0`dc`hit)],%b,%r)]
+&func`bossdclist WIP=[v(%0`dc`def)] / [v(%0`dc`hit)]
 
 
 think --- General Functions ---
@@ -85,7 +89,7 @@ think --- Command: +hp/dc ---
 
 &cmd`setdc WIP=$+hp/dc *=*/*:think [u(func`setdc,%0,%1,%2)]
 
-&func`setdc WIP=[u(func`general`checkboss,%0)][if(isnum(%1),[setq(defdc,%1)])][if(isnum(%2),[setq(hitdc,%2)])][if(%q<boss>,[if(and(%q<defdc>,%q<hitdc>),[u(func`setdc`set)],[u(func`msg,ERROR - Invalid hit or def dc. Must be a number.)])],[u(func`msg,ERROR - Could not find a boss by the name: %0)])]
+&func`setdc WIP=[u(func`general`checkboss,%0)][setq(defdc,%1,hitdc,%2)])][if(%q<boss>,[if(and(%q<defdc>,%q<hitdc>),[u(func`setdc`set)],[u(func`msg,ERROR - Invalid hit or def dc. Must be a number.)])],[u(func`msg,ERROR - Could not find a boss by the name: %0)])]
 &func`setdc`set WIP=[attrib_set(me/%q<boss>`dc`def,%q<defdc>)][attrib_set(me/%q<boss>`dc`hit,%q<hitdc>)][u(func`msg,Set [v(%q<boss>)] def/hit DCs to: %q<defdc>/%q<hitdc>)]
 
 
