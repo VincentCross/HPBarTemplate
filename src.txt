@@ -60,14 +60,6 @@ think --- Command: +hp/addplayer ---
 &func`addplayer`add WIP=[attrib_set(me/playerlist`%q<player>,[name(%q<player>)])][iter(1 2 3,[attrib_set(me/playerlist`%q<player>`hp`%i0,O)])][u(func`msg,Added [name(%q<player>)] to player list.)]
 
 
-think --- Command: +hp/del ---
-
-&cmd`del WIP=$+hp/del *:think [u(func`del,%0)]
-
-&func`del WIP=[u(func`general`determinetarget,%0)][if(%q<target>,[u(func`del`delete)])]
-&func`del`delete WIP=[u(func`msg,[v(%q<target>)] has been deleted from the list.)][wipe(me/%q<target>)]
-
-
 think --- Command: +hp/addboss ---
 
 &cmd`addboss WIP=$+hp/addboss *=*:think [u(func`addboss,%0,%1)]
@@ -75,6 +67,14 @@ think --- Command: +hp/addboss ---
 &func`addboss WIP=[u(func`general`checkboss,%0)][if(%q<boss>,[u(func`msg,ERROR - Boss already exists in list: %0)],[u(func`addboss`add,%0,%1)])]
 &func`addboss`add WIP=[u(func`addboss`getnewboss)][attrib_set(me/%q<boss>,%0)][iter([lnum(%1)],[attrib_set(me/%q<boss>`hp`%i0,O)])][u(func`msg,Added %0 to boss list.)]
 &func`addboss`getnewboss WIP=[setq(boss,BOSSLIST`[add([edit([last(sort(lattr(me/bosslist`*)))],BOSSLIST`,)],1)])][u(func`debugmsg,New boss is: %q<boss>)]
+
+
+think --- Command: +hp/del ---
+
+&cmd`del WIP=$+hp/del *:think [u(func`del,%0)]
+
+&func`del WIP=[u(func`general`determinetarget,%0)][if(%q<target>,[u(func`del`delete)])]
+&func`del`delete WIP=[u(func`msg,[v(%q<target>)] has been deleted from the list.)][wipe(me/%q<target>)]
 
 
 think --- Command: +hp/dmg ---
