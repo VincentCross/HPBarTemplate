@@ -8,3 +8,4 @@
     @create My HP Bar
     @parent My HP Bar=#809
     @set My HP Bar=!no_command
+    @lock/use My HP Bar=lock`uselock/1

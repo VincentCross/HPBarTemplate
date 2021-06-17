@@ -64,6 +64,8 @@ think ### Returns 'target'. For players this is 'playerlist`<dbref>' and for NPC
 &func`debugmsg #809=[if(v(debug),[pemit(%#,DEBUG - %0)])]
 &func`msg #809=[pemit(%#,%0)]
 
+&lock`uselock #809=[match(loc(me),loc(%#))]
+
 
 think --- Command: +hp/addplayer ---
 
