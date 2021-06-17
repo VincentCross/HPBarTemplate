@@ -1,0 +1,73 @@
+@create WIP
+&debug WIP=0
+
+@desc WIP=[align([v(desc`playerlist`margin1)] [v(desc`playerlist`margin2)],[v(desc`playerlist`header1)]%r[u(func`playernamelist)],[v(desc`playerlist`header2)]%r[u(func`playerdmglist)])]%r%r[align([v(desc`bosslist`margin1)] [v(desc`bosslist`margin2)] [v(desc`bosslist`margin3)],[v(desc`bosslist`header1)]%r[u(func`bosslist)],[v(desc`bosslist`header2)]%r[u(func`bossdmglist)],[v(desc`bosslist`header3)]%r[u(func`bossdclist)])]%r%r[u(desc`rules)]%r%r[u(desc`help)]
+
+&desc`playerlist`margin1 WIP=30
+&desc`playerlist`margin2 WIP=30
+&desc`playerlist`header1 WIP=Name
+&desc`playerlist`header2 WIP=HP
+
+&desc`bosslist`margin1 WIP=30
+&desc`bosslist`margin2 WIP=30
+&desc`bosslist`margin3 WIP=16
+&desc`bosslist`header1 WIP=Name
+&desc`bosslist`header2 WIP=HP
+&desc`bosslist`header3 WIP=ToDefend / ToHit
+
+&desc`rules WIP=Insert rules here with +hp/rules <rules>
+&desc`help WIP=Use +hp/help for command list
+
+&func`playernamelist WIP=[iter(lattr(me/playerlist`*),v(%i0),%b,%r)]
+&func`playerdmglist WIP=[iter(lattr(me/playerlist`*),[iter(lattr(me/%i0`hp`),[switch(v(%i0),O,\[[ansi(gh,O)]\],\[[ansi(rh,X)]\])])],%b,%r)]
+
+&func`bosslist WIP=[iter(lattr(me/bosslist`*),v(%i0),%b,%r)]
+&func`bossdmglist WIP=[iter(lattr(me/bosslist`*),[iter(lattr(me/%i0`hp`),[switch(v(%i0),O,\[[ansi(gh,O)]\],\[[ansi(rh,X)]\])])],%b,%r)]
+&func`bossdclist WIP=[iter(lattr(me/bosslist`*),[v(%i0`dc`def)] / [v(%i0`dc`hit)],%b,%r)]
+
+&func`general`checkplayer WIP=[if(hastype(*%0,player),[setr(player,num(*%0))][u(func`debugmsg,Player found: [name(%q<player>)] \(%q<player>\))],[u(func`debugmsg,Player not found: %0)]
+&func`general`checkboss WIP=[iter(lattr(me/bosslist`*),[if([strmatch(v(%i0),%0)],[setq(boss,%i0)][u(func`debugmsg,Boss found: [v(%q<boss>)])][ibreak()])])][if(not(%q<boss>),[u(func`debugmsg,No boss found: %0)])]
+
+&func`debugmsg WIP=[if(v(debug),[pemit(%#,DEBUG - %0)])]
+&func`msg WIP=[pemit(%#,%0)]
+
+&cmd`addplayer WIP=$+hp/addplayer *:think [u(func`addplayer,%0)]
+
+&func`addplayer WIP=[u(func`general`checkplayer,%0)][if(%q<player>,[u(func`addplayer`checkexisting)],[u(func`msg,ERROR - Invalid player: %0)])][if(%q<player>,[u(func`addplayer`add)])]
+&func`addplayer`checkexisting WIP=[if(match(edit(lattr(wip/playerlist`*),PLAYERLIST`,),%q<player>),[u(func`msg,ERROR - Player [name(%q<player>)] already exists in player list.)][unsetq(player)],[u(func`debugmsg,Player [name(%q<player>)] is not currently in the player list.)]
+&func`addplayer`add WIP=[attrib_set(me/playerlist`%q<player>,[name(%q<player>)])][iter(1 2 3,[attrib_set(me/playerlist`%q<player>`hp`%i0,O)])][u(func`msg,Added [name(%q<player>)] to player list.)]
+
+&cmd`addboss WIP=$+hp/addboss */*:think [u(func`addboss,%0,%1)]
+
+&func`addboss WIP=[u(func`general`checkboss,%0)][if(%q<boss>,[u(func`msg,ERROR - Boss already exists in list: %0)],[u(func`addboss`add,%0,%1)])]
+&func`addboss`add WIP=[u(func`addboss`getnewboss)][attrib_set(me/%q<boss>,%0)][iter([lnum(%1)],[attrib_set(me/%q<boss>`hp`%i0,O)])][u(func`msg,Added %0 to boss list.)]
+&func`addboss`getnewboss WIP=[setq(boss,BOSSLIST`[add([edit([last(sort(lattr(me/bosslist`*)))],BOSSLIST`,)],1)])][u(func`debugmsg,New boss is: %q<boss>)]
+
+&cmd`dmg WIP=$+hp/dmg *:think [u(func`dmg,%0)]
+
+&func`dmg WIP=[u(func`general`checkplayer,%0)][u(func`general`checkboss,%0)][u(func`dmg`determinetarget,%0)][if(%q<target>,[u(func`dmg`dodmg)]
+&func`dmg`determinetarget WIP=[if(%q<player>,[setq(target,playerlist`%q<player>)][u(func`debugmsg,Targeting player: [name(%q<player>)])])][if(%q<boss>,[setq(target,%q<boss>)][u(func`debugmsg,Targeting boss: [v(%q<boss>)])])][if(%q<target>,,[u(func`msg,ERROR - Could not find a target '%0' in either player or boss list.)])]
+&func`dmg`dodmg WIP=[iter([lattr(me/%q<target>`hp`*)],[switch([v(%i0)],O,[attrib_set(me/%i0,X)][setq(dmgset,1)][u(func`debugmsg,Setting %i0 to X)][u(func`msg,Adding damage to [v(%q<target>)])][ibreak()])])][if(not(%q<dmgset>),[u(func`msg,ERROR - That target is already at max damage.)])]
+
+&cmd`setdc WIP=$+hp/dc *=*/*:think [u(func`setdc,%0,%1,%2)]
+
+&func`setdc WIP=[u(func`general`checkboss,%0)][if(isnum(%1),[setq(defdc,%1)])][if(isnum(%2),[setq(hitdc,%2)])][if(%q<boss>,[if(and(%q<defdc>,%q<hitdc>),[u(func`setdc`set)],[u(func`msg,ERROR - Invalid hit or def dc. Must be a number.)])],[u(func`msg,ERROR - Could not find a boss by the name: %0)])]
+&func`setdc`set WIP=[attrib_set(me/%q<boss>`dc`def,%q<defdc>)][attrib_set(me/%q<boss>`dc`hit,%q<hitdc>)][u(func`msg,Set [v(%q<boss>)] def/hit DCs to: %q<defdc>/%q<hitdc>)]
+
+&cmd`clear WIP=$+hp/clear:think [u(func`clear)]
+
+&func`clear WIP=[wipe(me/playerlist)][wipe(me/bosslist)][u(func`msg,Player and boss lists have been cleared!)]
+
+&cmd`rules WIP=$+hp/rules *:think [u(func`rules,%0)]
+
+&func`rules WIP=[attrib_set(me/desc`rules,%0)][u(func`msg,Rules have been set!)]
+
+&cmd`help WIP=$+hp/help:think [u(func`help)]
+
+&func`help WIP=[u(func`msg,[name(me)] helpfile!%r%r[iter(lattr(me/func`help`*),[v(%i0)],%b,%r)]
+&func`help`addplayer WIP=+hp/addplayer <name> - Add a player to the player list.
+&func`help`addboss WIP=+hp/addboss <name>/<# of HP> - Add a boss to the boss list with the specified number of HP points.
+&func`help`dmg WIP=+hp/dmg <target> - Add a damage to either a player or a boss.
+&func`help`dc WIP=+hp/dc <boss>=<defend>/<hit> - Set the DCs to defend and to hit a boss.
+&func`help`clear WIP=+hp/clear - Clears the player and boss lists.
+&func`help`rules WIP=+hp/rules <rules> - Simply adds some rules to the object description.

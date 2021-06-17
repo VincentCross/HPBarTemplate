@@ -1,0 +1,32 @@
+@wipe WIP/func
+@wipe WIP/cmd
+@wipe WIP/playerlist
+@wipe WIP/bosslist
+
+&playerlist`#176 WIP=Yuuki
+&playerlist`#406 WIP=Kita
+&playerlist`#477 WIP=Prophylaxis
+
+&playerlist`#176`hp`1 WIP=O
+&playerlist`#176`hp`2 WIP=O
+&playerlist`#176`hp`3 WIP=O
+&playerlist`#406`hp`1 WIP=O
+&playerlist`#406`hp`2 WIP=O
+&playerlist`#406`hp`3 WIP=O
+&playerlist`#477`hp`1 WIP=O
+&playerlist`#477`hp`2 WIP=O
+&playerlist`#477`hp`3 WIP=O
+
+&bosslist`1 WIP=Boss1
+&bosslist`2 WIP=Boss2
+&bosslist`3 WIP=Boss3
+
+&bosslist`1`hp`1 WIP=O
+&bosslist`1`hp`2 WIP=O
+&bosslist`1`hp`3 WIP=O
+&bosslist`1`hp`4 WIP=O
+&bosslist`2`hp`1 WIP=O
+&bosslist`2`hp`2 WIP=O
+&bosslist`2`hp`3 WIP=O
+&bosslist`3`hp`1 WIP=O
+&bosslist`3`hp`2 WIP=O
