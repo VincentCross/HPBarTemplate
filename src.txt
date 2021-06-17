@@ -151,7 +151,7 @@ think --- Command: +hp/help ---
 
 &cmd`help #809=$+hp/help:think [u(func`help)]
 
-&func`help #809=[u(func`msg,[name(me)] helpfile!%r%r[iter(lattr(parent(me)/func`help`*),[v(%i0)],%b,%r)]
+&func`help #809=[u(func`msg,[name(me)] helpfile!%r%r[iter(lattr(parent(me)/func`help`*),[u(%i0)],%b,%r)]
 &func`help`addplayer #809=+hp/addplayer <name> - Add a player to the player list.
 &func`help`addnpc #809=+hp/addnpc <name>=<# of HP> - Add an NPC to the NPC list with the specified number of HP points.
 &func`help`addboss #809=+hp/addboss <name>=<# of HP> - Add a boss to the boss list with the specified number of HP points.
