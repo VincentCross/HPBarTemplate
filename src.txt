@@ -102,7 +102,15 @@ think --- Command: +hp/dmg ---
 &cmd`dmg WIP=$+hp/dmg *:think [u(func`dmg,%0)]
 
 &func`dmg WIP=[u(func`general`determinetarget,%0)][if(%q<target>,[u(func`dmg`dodmg)])]
-&func`dmg`dodmg WIP=[iter([lattr(me/%q<target>`hp`*)],[switch([v(%i0)],O,[attrib_set(me/%i0,X)][setq(dmgset,1)][u(func`debugmsg,Setting %i0 to X)][u(func`msg,Adding damage to [v(%q<target>)])][ibreak()])])][if(not(%q<dmgset>),[u(func`msg,ERROR - That target is already at max damage.)])]
+&func`dmg`dodmg WIP=[iter([sort(lattr(me/%q<target>`hp`*))],[switch([v(%i0)],O,[attrib_set(me/%i0,X)][setq(dmgset,1)][u(func`debugmsg,Setting %i0 to X)][u(func`msg,Adding damage to [v(%q<target>)])][ibreak()])])][if(not(%q<dmgset>),[u(func`msg,ERROR - That target is already at max damage.)])]
+
+
+think --- Command: +hp/undmg ---
+
+&cmd`undmg WIP=$+hp/undmg *:think [u(func`undmg,%0)]
+
+&func`undmg WIP=[u(func`general`determinetarget,%0)][if(%q<target>,[u(func`undmg`remdmg)])]
+&func`undmg`remdmg WIP=[iter([revwords(sort(lattr(me/%q<target>`hp`*)))],[switch([v(%i0)],X,[attrib_set(me/%i0,O)][setq(dmgunset,1)][u(func`debugmsg,Setting %i0 to O)][u(func`msg,Removing damage from [v(%q<target>)])][ibreak()])])][if(not(%q<dmgunset>),[u(func`msg,ERROR - That target is already at max health.)])]
 
 
 think --- Command: +hp/dc ---
@@ -145,12 +153,13 @@ think --- Command: +hp/help ---
 &func`help`addplayer WIP=+hp/addplayer <name> - Add a player to the player list.
 &func`help`addnpc WIP=+hp/addnpc <name>=<# of HP> - Add an NPC to the NPC list with the specified number of HP points.
 &func`help`addboss WIP=+hp/addboss <name>=<# of HP> - Add a boss to the boss list with the specified number of HP points.
-&func`help`dmg WIP=+hp/dmg <target> - Add a damage to the player/npc/boss.
+&func`help`dmg WIP=+hp/dmg <name> - Add a damage to the player/npc/boss.
 &func`help`dc WIP=+hp/dc <boss>=<defend>/<hit> - Set the DCs to defend and to hit a boss.
 &func`help`clear WIP=+hp/clear - Clears the player and boss lists.
 &func`help`rules WIP=+hp/rules <rules> - Simply adds some rules to the object description.
 &func`help`credits WIP=+hp/credits - Gives you lots and lots of credits to buy shiney things with.
 &func`help`note WIP=+hp/note <name>=<note> - Adds a note that displays below the player/npc/boss.
+&func`help`undmg WIP=+hp/undmg <name> - Remove a damage from the player/npc/boss.
 
 
 think --- Command: +hp/credits ---
