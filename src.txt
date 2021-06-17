@@ -3,7 +3,7 @@
 
 think --- Description ---
 
-@desc WIP=[u(desc`playerlist`headers)]%r[iter(lattr(me/playerlist`*),[align([v(desc`playerlist`margin1)] [v(desc`playerlist`margin2)],[v(%i0)],[u(func`dmglist,%i0)])],%b,%r)]%r%r[u(desc`bosslist`headers)]%r[iter(lattr(me/bosslist`*),[align([v(desc`bosslist`margin1)] [v(desc`bosslist`margin2)] [v(desc`bosslist`margin3)],[v(%i0)],[u(func`dmglist,%i0)],[u(func`bossdclist,%i0)])],%b,%r)]
+@desc WIP=[u(desc`playerlist`headers)]%r[iter(lattr(me/playerlist`*),[align([v(desc`playerlist`margin1)] [v(desc`playerlist`margin2)],[v(%i0)],[u(func`dmglist,%i0)])],%b,%r)][if(lattr(me/NPCLIST`*),%r%r[u(desc`npclist`headers)]%r[iter(lattr(me/npclist`*),[align([v(desc`npclist`margin1)] [v(desc`npclist`margin2)],[v(%i0)],[u(func`dmglist,%i0)])],%b,%r)])]%r%r[u(desc`bosslist`headers)]%r[iter(lattr(me/bosslist`*),[align([v(desc`bosslist`margin1)] [v(desc`bosslist`margin2)] [v(desc`bosslist`margin3)],[v(%i0)],[u(func`dmglist,%i0)],[u(func`bossdclist,%i0)])],%b,%r)]
 
 
 think --- Description Layout ---
@@ -12,15 +12,22 @@ think --- Description Layout ---
 
 &desc`playerlist`margin1 WIP=30
 &desc`playerlist`margin2 WIP=30
-&desc`playerlist`header1 WIP=Name
+&desc`playerlist`header1 WIP=Player Name
 &desc`playerlist`header2 WIP=HP
+
+&desc`npclist`headers WIP=[align([v(desc`npclist`margin1)] [v(desc`npclist`margin2)],[v(desc`npclist`header1)],[v(desc`npclist`header2)])]
+
+&desc`npclist`margin1 WIP=30
+&desc`npclist`margin2 WIP=30
+&desc`npclist`header1 WIP=NPC Name
+&desc`npclist`header2 WIP=HP
 
 &desc`bosslist`headers WIP=[align([v(desc`bosslist`margin1)] [v(desc`bosslist`margin2)] [v(desc`bosslist`margin3)],[v(desc`bosslist`header1)],[v(desc`bosslist`header2)],[v(desc`bosslist`header3)])]
 
 &desc`bosslist`margin1 WIP=30
 &desc`bosslist`margin2 WIP=30
 &desc`bosslist`margin3 WIP=16
-&desc`bosslist`header1 WIP=Name
+&desc`bosslist`header1 WIP=Boss Name
 &desc`bosslist`header2 WIP=HP
 &desc`bosslist`header3 WIP=ToDefend / ToHit
 
@@ -32,8 +39,6 @@ think --- Description Data Pull ---
 
 &func`dmglist WIP=[iter(lattr(me/%0`hp`),[switch(v(%i0),O,\[[ansi(gh,O)]\],\[[ansi(rh,X)]\])])]
 
-&func`playernamelist WIP=[iter(lattr(me/playerlist`*),v(%i0))]
-
 &func`bosslist WIP=[iter(lattr(me/bosslist`*),v(%i0),%b,%r)]
 &func`bossdclist WIP=[v(%0`dc`def)] / [v(%0`dc`hit)]
 
@@ -43,9 +48,10 @@ think --- General Functions ---
 &func`general`checkplayer WIP=[if(hastype(*%0,player),[setr(player,num(*%0))][u(func`debugmsg,Player found: [name(%q<player>)] \(%q<player>\))],[u(func`debugmsg,Player not found: %0)]
 &func`general`checkplayerinlist WIP=[if(match(edit(lattr(wip/playerlist`*),PLAYERLIST`,),%q<player>),1,0)]
 &func`general`checkboss WIP=[iter(lattr(me/bosslist`*),[if([strmatch(v(%i0),%0)],[setq(boss,%i0)][u(func`debugmsg,Boss found: [v(%q<boss>)])][ibreak()])])][if(not(%q<boss>),[u(func`debugmsg,No boss found: %0)])]
+&func`general`checknpc WIP=[iter(lattr(me/npclist`*),[if([strmatch(v(%i0),%0)],[setq(npc,%i0)][u(func`debugmsg,NPC found: [v(%q<npc>)])][ibreak()])])][if(not(%q<npc>),[u(func`debugmsg,No NPC found: %0)])]
 
-think ### Returns 'target'. For players this is 'playerlist`<dbref>' and for bosses this is 'bosslist`#`
-&func`general`determinetarget WIP=[u(func`general`checkplayer,%0)][u(func`general`checkboss,%0)][if(%q<player>,[setq(target,playerlist`%q<player>)][u(func`debugmsg,Targeting player: [name(%q<player>)])])][if(%q<boss>,[setq(target,%q<boss>)][u(func`debugmsg,Targeting boss: [v(%q<boss>)])])][if(%q<target>,,[u(func`msg,ERROR - Could not find a target '%0' in any list.)])]
+think ### Returns 'target'. For players this is 'playerlist`<dbref>' and for NPCs/bosses this is 'bosslist`#`
+&func`general`determinetarget WIP=[u(func`general`checkplayer,%0)][u(func`general`checknpc,%0)][u(func`general`checkboss,%0)][if(%q<player>,[setq(target,playerlist`%q<player>)][u(func`debugmsg,Targeting player: [name(%q<player>)])])][if(%q<npc>,[setq(target,%q<npc>)][u(func`debugmsg,Targeting NPC: [v(%q<npc>)])])][if(%q<boss>,[setq(target,%q<boss>)][u(func`debugmsg,Targeting boss: [v(%q<boss>)])])][if(%q<target>,,[u(func`msg,ERROR - Could not find a target '%0' in any list.)])]
 
 &func`debugmsg WIP=[if(v(debug),[pemit(%#,DEBUG - %0)])]
 &func`msg WIP=[pemit(%#,%0)]
@@ -60,13 +66,21 @@ think --- Command: +hp/addplayer ---
 &func`addplayer`add WIP=[attrib_set(me/playerlist`%q<player>,[name(%q<player>)])][iter(1 2 3,[attrib_set(me/playerlist`%q<player>`hp`%i0,O)])][u(func`msg,Added [name(%q<player>)] to player list.)]
 
 
+think --- Command: +hp/addnpc ---
+
+&cmd`addnpc WIP=$+hp/addnpc *=*:think [u(func`addnpc,%0,%1)]
+
+&func`addnpc WIP=[u(func`general`checknpc,%0)][if(%q<npc>,[u(func`msg,ERROR - NPC already exists in list: %0)],[u(func`addnpc`add,%0,%1)])]
+&func`addnpc`add WIP=[u(func`addnpc`getnewnpc)][attrib_set(me/%q<newnpc>,%0)][iter([lnum(%1)],[attrib_set(me/%q<newnpc>`hp`%i0,O)])][u(func`msg,Added %0 to NPC list.)]
+&func`addnpc`getnewnpc WIP=[setq(newnpc,NPCLIST`[add([edit([last(sort(lattr(me/npclist`*)))],NPCLIST`,)],1)])][u(func`debugmsg,New NPC is: %q<newnpc>)]
+
 think --- Command: +hp/addboss ---
 
 &cmd`addboss WIP=$+hp/addboss *=*:think [u(func`addboss,%0,%1)]
 
 &func`addboss WIP=[u(func`general`checkboss,%0)][if(%q<boss>,[u(func`msg,ERROR - Boss already exists in list: %0)],[u(func`addboss`add,%0,%1)])]
-&func`addboss`add WIP=[u(func`addboss`getnewboss)][attrib_set(me/%q<boss>,%0)][iter([lnum(%1)],[attrib_set(me/%q<boss>`hp`%i0,O)])][u(func`msg,Added %0 to boss list.)]
-&func`addboss`getnewboss WIP=[setq(boss,BOSSLIST`[add([edit([last(sort(lattr(me/bosslist`*)))],BOSSLIST`,)],1)])][u(func`debugmsg,New boss is: %q<boss>)]
+&func`addboss`add WIP=[u(func`addboss`getnewboss)][attrib_set(me/%q<newboss>,%0)][iter([lnum(%1)],[attrib_set(me/%q<newboss>`hp`%i0,O)])][u(func`msg,Added %0 to boss list.)]
+&func`addboss`getnewboss WIP=[setq(newboss,BOSSLIST`[add([edit([last(sort(lattr(me/bosslist`*)))],BOSSLIST`,)],1)])][u(func`debugmsg,New boss is: %q<newboss>)]
 
 
 think --- Command: +hp/del ---
