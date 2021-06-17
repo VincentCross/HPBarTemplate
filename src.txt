@@ -3,7 +3,7 @@
 
 think --- Description ---
 
-@desc WIP=[u(desc`playerlist`headers)]%r[iter(lattr(me/playerlist`*),[align([v(desc`playerlist`margin1)] [v(desc`playerlist`margin2)],[v(%i0)],[u(func`dmglist,%i0)])][u(desc`notes,%i0)],%b,%r)][if(lattr(me/NPCLIST`*),%r%r[u(desc`npclist`headers)]%r[iter(lattr(me/npclist`*),[align([v(desc`npclist`margin1)] [v(desc`npclist`margin2)],[v(%i0)],[u(func`dmglist,%i0)])][u(desc`notes,%i0)],%b,%r)])]%r%r[u(desc`bosslist`headers)]%r[iter(lattr(me/bosslist`*),[align([v(desc`bosslist`margin1)] [v(desc`bosslist`margin2)] [v(desc`bosslist`margin3)],[v(%i0)],[u(func`dmglist,%i0)],[u(func`bossdclist,%i0)])][u(desc`notes,%i0)],%b,%r)]
+@desc WIP=[u(desc`playerlist`headers)]%r[iter(lattr(me/playerlist`*),[align([v(desc`playerlist`margin1)] [v(desc`playerlist`margin2)],[v(%i0)],[u(func`dmglist,%i0)])][u(desc`notes,%i0)],%b,%r)][if(lattr(me/NPCLIST`*),%r%r[u(desc`npclist`headers)]%r[iter(lattr(me/npclist`*),[align([v(desc`npclist`margin1)] [v(desc`npclist`margin2)],[v(%i0)],[u(func`dmglist,%i0)])][u(desc`notes,%i0)],%b,%r)])]%r%r[u(desc`bosslist`headers)]%r[iter(lattr(me/bosslist`*),[align([v(desc`bosslist`margin1)] [v(desc`bosslist`margin2)] [v(desc`bosslist`margin3)],[v(%i0)],[u(func`dmglist,%i0)],[u(func`bossdclist,%i0)])][u(desc`notes,%i0)],%b,%r)]%r%r[u(desc`rules)]%r%r[u(desc`help)]
 
 
 think --- Description Layout ---
