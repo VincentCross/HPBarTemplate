@@ -166,4 +166,4 @@ think --- Command: +hp/credits ---
 
 &cmd`credits HP Bar Template=$+hp/credits:think [u(func`credits)]
 
-&func`credits HP Bar Template=[pemit(%#,--HP Bar Template Credits--%rCreated by Yuuki@Elder Tale Online MUSH%rGitHub: https://github.com/VincentCross/HPBarTemplate)]
+&func`credits HP Bar Template=[pemit(%#,--[name(me)] Credits--%rCreated by Yuuki@Elder Tale Online MUSH%rGitHub: https://github.com/VincentCross/HPBarTemplate)]
