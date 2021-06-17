@@ -37,7 +37,11 @@ think --- Description Data Pull ---
 think --- General Functions ---
 
 &func`general`checkplayer WIP=[if(hastype(*%0,player),[setr(player,num(*%0))][u(func`debugmsg,Player found: [name(%q<player>)] \(%q<player>\))],[u(func`debugmsg,Player not found: %0)]
+&func`general`checkplayerinlist WIP=[if(match(edit(lattr(wip/playerlist`*),PLAYERLIST`,),%q<player>),1,0)]
 &func`general`checkboss WIP=[iter(lattr(me/bosslist`*),[if([strmatch(v(%i0),%0)],[setq(boss,%i0)][u(func`debugmsg,Boss found: [v(%q<boss>)])][ibreak()])])][if(not(%q<boss>),[u(func`debugmsg,No boss found: %0)])]
+
+think ### Returns 'target'. For players this is 'playerlist`<dbref>' and for bosses this is 'bosslist`#`
+&func`general`determinetarget WIP=[u(func`general`checkplayer,%0)][u(func`general`checkboss,%0)][if(%q<player>,[setq(target,playerlist`%q<player>)][u(func`debugmsg,Targeting player: [name(%q<player>)])])][if(%q<boss>,[setq(target,%q<boss>)][u(func`debugmsg,Targeting boss: [v(%q<boss>)])])][if(%q<target>,,[u(func`msg,ERROR - Could not find a target '%0' in any list.)])]
 
 &func`debugmsg WIP=[if(v(debug),[pemit(%#,DEBUG - %0)])]
 &func`msg WIP=[pemit(%#,%0)]
@@ -48,13 +52,21 @@ think --- Command: +hp/addplayer ---
 &cmd`addplayer WIP=$+hp/addplayer *:think [u(func`addplayer,%0)]
 
 &func`addplayer WIP=[u(func`general`checkplayer,%0)][if(%q<player>,[u(func`addplayer`checkexisting)],[u(func`msg,ERROR - Invalid player: %0)])][if(%q<player>,[u(func`addplayer`add)])]
-&func`addplayer`checkexisting WIP=[if(match(edit(lattr(wip/playerlist`*),PLAYERLIST`,),%q<player>),[u(func`msg,ERROR - Player [name(%q<player>)] already exists in player list.)][unsetq(player)],[u(func`debugmsg,Player [name(%q<player>)] is not currently in the player list.)]
+&func`addplayer`checkexisting WIP=[if([u(func`general`checkplayerinlist)],[u(func`msg,ERROR - Player [name(%q<player>)] already exists in player list.)][unsetq(player)],[u(func`debugmsg,Player [name(%q<player>)] is not currently in the player list.)]
 &func`addplayer`add WIP=[attrib_set(me/playerlist`%q<player>,[name(%q<player>)])][iter(1 2 3,[attrib_set(me/playerlist`%q<player>`hp`%i0,O)])][u(func`msg,Added [name(%q<player>)] to player list.)]
+
+
+think --- Command: +hp/del ---
+
+&cmd`del WIP=$+hp/del *:think [u(func`del,%0)]
+
+&func`del WIP=[u(func`general`determinetarget,%0)][if(%q<target>,[u(func`del`delete)])]
+&func`del`delete WIP=[u(func`msg,[v(%q<target>)] has been deleted from the list.)][wipe(me/%q<target>)]
 
 
 think --- Command: +hp/addboss ---
 
-&cmd`addboss WIP=$+hp/addboss */*:think [u(func`addboss,%0,%1)]
+&cmd`addboss WIP=$+hp/addboss *=*:think [u(func`addboss,%0,%1)]
 
 &func`addboss WIP=[u(func`general`checkboss,%0)][if(%q<boss>,[u(func`msg,ERROR - Boss already exists in list: %0)],[u(func`addboss`add,%0,%1)])]
 &func`addboss`add WIP=[u(func`addboss`getnewboss)][attrib_set(me/%q<boss>,%0)][iter([lnum(%1)],[attrib_set(me/%q<boss>`hp`%i0,O)])][u(func`msg,Added %0 to boss list.)]
@@ -65,8 +77,7 @@ think --- Command: +hp/dmg ---
 
 &cmd`dmg WIP=$+hp/dmg *:think [u(func`dmg,%0)]
 
-&func`dmg WIP=[u(func`general`checkplayer,%0)][u(func`general`checkboss,%0)][u(func`dmg`determinetarget,%0)][if(%q<target>,[u(func`dmg`dodmg)]
-&func`dmg`determinetarget WIP=[if(%q<player>,[setq(target,playerlist`%q<player>)][u(func`debugmsg,Targeting player: [name(%q<player>)])])][if(%q<boss>,[setq(target,%q<boss>)][u(func`debugmsg,Targeting boss: [v(%q<boss>)])])][if(%q<target>,,[u(func`msg,ERROR - Could not find a target '%0' in either player or boss list.)])]
+&func`dmg WIP=[u(func`general`determinetarget,%0)][if(%q<target>,[u(func`dmg`dodmg)])]
 &func`dmg`dodmg WIP=[iter([lattr(me/%q<target>`hp`*)],[switch([v(%i0)],O,[attrib_set(me/%i0,X)][setq(dmgset,1)][u(func`debugmsg,Setting %i0 to X)][u(func`msg,Adding damage to [v(%q<target>)])][ibreak()])])][if(not(%q<dmgset>),[u(func`msg,ERROR - That target is already at max damage.)])]
 
 
@@ -102,7 +113,7 @@ think --- Command: +hp/help ---
 
 &func`help WIP=[u(func`msg,[name(me)] helpfile!%r%r[iter(lattr(me/func`help`*),[v(%i0)],%b,%r)]
 &func`help`addplayer WIP=+hp/addplayer <name> - Add a player to the player list.
-&func`help`addboss WIP=+hp/addboss <name>/<# of HP> - Add a boss to the boss list with the specified number of HP points.
+&func`help`addboss WIP=+hp/addboss <name>=<# of HP> - Add a boss to the boss list with the specified number of HP points.
 &func`help`dmg WIP=+hp/dmg <target> - Add a damage to either a player or a boss.
 &func`help`dc WIP=+hp/dc <boss>=<defend>/<hit> - Set the DCs to defend and to hit a boss.
 &func`help`clear WIP=+hp/clear - Clears the player and boss lists.
