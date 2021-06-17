@@ -11,5 +11,7 @@
 	
 # Use Lock
 If you want to prevent a situation where you're carrying HP Bars but also trying to use one in a room, thus using all of them, you can set a use lock with this command:
+
     @lock/use My HP Bar=lock`uselock/1
+	
 This will mean that the commands on that HP Bar can only be used if you're in the same room as it. Not if you're carrying it.
