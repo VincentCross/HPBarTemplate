@@ -1,169 +1,171 @@
 @create HP Bar Template
-&debug HP Bar Template=0
+&debug #809=0
 
 think --- Description ---
 
-@desc HP Bar Template=[u(desc`playerlist`headers)]%r[iter(lattr(me/playerlist`*),[align([v(desc`playerlist`margin1)] [v(desc`playerlist`margin2)],[v(%i0)],[u(func`dmglist,%i0)])][u(desc`notes,%i0)],%b,%r)][if(lattr(me/NPCLIST`*),%r%r[u(desc`npclist`headers)]%r[iter(lattr(me/npclist`*),[align([v(desc`npclist`margin1)] [v(desc`npclist`margin2)],[v(%i0)],[u(func`dmglist,%i0)])][u(desc`notes,%i0)],%b,%r)])]%r%r[u(desc`bosslist`headers)]%r[iter(lattr(me/bosslist`*),[align([v(desc`bosslist`margin1)] [v(desc`bosslist`margin2)] [v(desc`bosslist`margin3)],[v(%i0)],[u(func`dmglist,%i0)],[u(func`bossdclist,%i0)])][u(desc`notes,%i0)],%b,%r)]%r%r[u(desc`rules)]%r%r[u(desc`help)]
+@desc #809=[u(desc`playerlist`headers)]%r[iter(lattr(me/playerlist`*),[align([v(desc`playerlist`margin1)] [v(desc`playerlist`margin2)],[v(%i0)],[u(func`dmglist,%i0)])][u(desc`notes,%i0)],%b,%r)][if(lattr(me/NPCLIST`*),%r%r[u(desc`npclist`headers)]%r[iter(lattr(me/npclist`*),[align([v(desc`npclist`margin1)] [v(desc`npclist`margin2)],[v(%i0)],[u(func`dmglist,%i0)])][u(desc`notes,%i0)],%b,%r)])]%r%r[u(desc`bosslist`headers)]%r[iter(lattr(me/bosslist`*),[align([v(desc`bosslist`margin1)] [v(desc`bosslist`margin2)] [v(desc`bosslist`margin3)],[v(%i0)],[u(func`dmglist,%i0)],[u(func`bossdclist,%i0)])][u(desc`notes,%i0)],%b,%r)]%r%r[v(desc`rules`header)]%r[u(desc`rules)]%r%r[u(desc`help)]
 
 
 think --- Description Layout ---
 
-&desc`notes`margin1 HP Bar Template=4
-&desc`notes`margin2 HP Bar Template=70
-&desc`notes`space HP Bar Template=3
+&desc`notes`margin1 #809=4
+&desc`notes`margin2 #809=70
+&desc`notes`space #809=3
 
-&desc`playerlist`headers HP Bar Template=[align([v(desc`playerlist`margin1)] [v(desc`playerlist`margin2)],[v(desc`playerlist`header1)],[v(desc`playerlist`header2)])]
+&desc`rules`header #809=Rules
 
-&desc`playerlist`margin1 HP Bar Template=30
-&desc`playerlist`margin2 HP Bar Template=30
-&desc`playerlist`header1 HP Bar Template=Player Name
-&desc`playerlist`header2 HP Bar Template=HP
+&desc`playerlist`headers #809=[align([v(desc`playerlist`margin1)] [v(desc`playerlist`margin2)],[v(desc`playerlist`header1)],[v(desc`playerlist`header2)])]
 
-&desc`npclist`headers HP Bar Template=[align([v(desc`npclist`margin1)] [v(desc`npclist`margin2)],[v(desc`npclist`header1)],[v(desc`npclist`header2)])]
+&desc`playerlist`margin1 #809=30
+&desc`playerlist`margin2 #809=30
+&desc`playerlist`header1 #809=Player Name
+&desc`playerlist`header2 #809=HP
 
-&desc`npclist`margin1 HP Bar Template=30
-&desc`npclist`margin2 HP Bar Template=30
-&desc`npclist`header1 HP Bar Template=NPC Name
-&desc`npclist`header2 HP Bar Template=HP
+&desc`npclist`headers #809=[align([v(desc`npclist`margin1)] [v(desc`npclist`margin2)],[v(desc`npclist`header1)],[v(desc`npclist`header2)])]
 
-&desc`bosslist`headers HP Bar Template=[align([v(desc`bosslist`margin1)] [v(desc`bosslist`margin2)] [v(desc`bosslist`margin3)],[v(desc`bosslist`header1)],[v(desc`bosslist`header2)],[v(desc`bosslist`header3)])]
+&desc`npclist`margin1 #809=30
+&desc`npclist`margin2 #809=30
+&desc`npclist`header1 #809=NPC Name
+&desc`npclist`header2 #809=HP
 
-&desc`bosslist`margin1 HP Bar Template=30
-&desc`bosslist`margin2 HP Bar Template=30
-&desc`bosslist`margin3 HP Bar Template=16
-&desc`bosslist`header1 HP Bar Template=Boss Name
-&desc`bosslist`header2 HP Bar Template=HP
-&desc`bosslist`header3 HP Bar Template=ToDefend / ToHit
+&desc`bosslist`headers #809=[align([v(desc`bosslist`margin1)] [v(desc`bosslist`margin2)] [v(desc`bosslist`margin3)],[v(desc`bosslist`header1)],[v(desc`bosslist`header2)],[v(desc`bosslist`header3)])]
 
-&desc`notes HP Bar Template=[if(hasattr(me,%0`NOTE),%r[align([v(desc`notes`margin1)] [v(desc`notes`margin2)],[space([v(desc`notes`space)])]-,[v(%0`NOTE)])])]
+&desc`bosslist`margin1 #809=30
+&desc`bosslist`margin2 #809=30
+&desc`bosslist`margin3 #809=16
+&desc`bosslist`header1 #809=Boss Name
+&desc`bosslist`header2 #809=HP
+&desc`bosslist`header3 #809=ToDefend / ToHit
 
-&desc`rules HP Bar Template=Insert rules here with +hp/rules <rules>
-&desc`help HP Bar Template=Use +hp/help for command list
+&desc`notes #809=[if(hasattr(me,%0`NOTE),%r[align([v(desc`notes`margin1)] [v(desc`notes`margin2)],[space([v(desc`notes`space)])]-,[v(%0`NOTE)])])]
+
+&desc`rules #809=Insert rules here with +hp/rules <rules>
+&desc`help #809=Use +hp/help for command list
 
 
 think --- Description Data Pull ---
 
-&func`dmglist HP Bar Template=[iter(lattr(me/%0`hp`),[switch(v(%i0),O,\[[ansi(gh,O)]\],\[[ansi(rh,X)]\])])]
+&func`dmglist #809=[iter(lattr(me/%0`hp`),[switch(v(%i0),O,\[[ansi(gh,O)]\],\[[ansi(rh,X)]\])])]
 
-&func`bosslist HP Bar Template=[iter(lattr(me/bosslist`*),v(%i0),%b,%r)]
-&func`bossdclist HP Bar Template=[v(%0`dc`def)] / [v(%0`dc`hit)]
+&func`bosslist #809=[iter(lattr(me/bosslist`*),v(%i0),%b,%r)]
+&func`bossdclist #809=[v(%0`dc`def)] / [v(%0`dc`hit)]
 
 
 think --- General Functions ---
 
-&func`general`checkplayer HP Bar Template=[if(hastype(*%0,player),[setr(player,num(*%0))][u(func`debugmsg,Player found: [name(%q<player>)] \(%q<player>\))],[u(func`debugmsg,Player not found: %0)]
-&func`general`checkplayerinlist HP Bar Template=[if(match(edit(lattr(HP Bar Template/playerlist`*),PLAYERLIST`,),%q<player>),1,0)]
-&func`general`checkboss HP Bar Template=[iter(lattr(me/bosslist`*),[if([strmatch(v(%i0),%0)],[setq(boss,%i0)][u(func`debugmsg,Boss found: [v(%q<boss>)])][ibreak()])])][if(not(%q<boss>),[u(func`debugmsg,No boss found: %0)])]
-&func`general`checknpc HP Bar Template=[iter(lattr(me/npclist`*),[if([strmatch(v(%i0),%0)],[setq(npc,%i0)][u(func`debugmsg,NPC found: [v(%q<npc>)])][ibreak()])])][if(not(%q<npc>),[u(func`debugmsg,No NPC found: %0)])]
+&func`general`checkplayer #809=[if(hastype(*%0,player),[setr(player,num(*%0))][u(func`debugmsg,Player found: [name(%q<player>)] \(%q<player>\))],[u(func`debugmsg,Player not found: %0)]
+&func`general`checkplayerinlist #809=[if(match(edit(lattr(#809/playerlist`*),PLAYERLIST`,),%q<player>),1,0)]
+&func`general`checkboss #809=[iter(lattr(me/bosslist`*),[if([strmatch(v(%i0),%0)],[setq(boss,%i0)][u(func`debugmsg,Boss found: [v(%q<boss>)])][ibreak()])])][if(not(%q<boss>),[u(func`debugmsg,No boss found: %0)])]
+&func`general`checknpc #809=[iter(lattr(me/npclist`*),[if([strmatch(v(%i0),%0)],[setq(npc,%i0)][u(func`debugmsg,NPC found: [v(%q<npc>)])][ibreak()])])][if(not(%q<npc>),[u(func`debugmsg,No NPC found: %0)])]
 
 think ### Returns 'target'. For players this is 'playerlist`<dbref>' and for NPCs/bosses this is 'bosslist`#`
-&func`general`determinetarget HP Bar Template=[u(func`general`checkplayer,%0)][u(func`general`checknpc,%0)][u(func`general`checkboss,%0)][if(%q<player>,[setq(target,playerlist`%q<player>)][u(func`debugmsg,Targeting player: [name(%q<player>)])])][if(%q<npc>,[setq(target,%q<npc>)][u(func`debugmsg,Targeting NPC: [v(%q<npc>)])])][if(%q<boss>,[setq(target,%q<boss>)][u(func`debugmsg,Targeting boss: [v(%q<boss>)])])][if(%q<target>,,[u(func`msg,ERROR - Could not find a target '%0' in any list.)])]
+&func`general`determinetarget #809=[u(func`general`checkplayer,%0)][u(func`general`checknpc,%0)][u(func`general`checkboss,%0)][if(%q<player>,[setq(target,playerlist`%q<player>)][u(func`debugmsg,Targeting player: [name(%q<player>)])])][if(%q<npc>,[setq(target,%q<npc>)][u(func`debugmsg,Targeting NPC: [v(%q<npc>)])])][if(%q<boss>,[setq(target,%q<boss>)][u(func`debugmsg,Targeting boss: [v(%q<boss>)])])][if(%q<target>,,[u(func`msg,ERROR - Could not find a target '%0' in any list.)])]
 
-&func`debugmsg HP Bar Template=[if(v(debug),[pemit(%#,DEBUG - %0)])]
-&func`msg HP Bar Template=[pemit(%#,%0)]
+&func`debugmsg #809=[if(v(debug),[pemit(%#,DEBUG - %0)])]
+&func`msg #809=[pemit(%#,%0)]
 
 
 think --- Command: +hp/addplayer ---
 
-&cmd`addplayer HP Bar Template=$+hp/addplayer *:think [u(func`addplayer,%0)]
+&cmd`addplayer #809=$+hp/addplayer *:think [u(func`addplayer,%0)]
 
-&func`addplayer HP Bar Template=[u(func`general`checkplayer,%0)][if(%q<player>,[u(func`addplayer`checkexisting)],[u(func`msg,ERROR - Invalid player: %0)])][if(%q<player>,[u(func`addplayer`add)])]
-&func`addplayer`checkexisting HP Bar Template=[if([u(func`general`checkplayerinlist)],[u(func`msg,ERROR - Player [name(%q<player>)] already exists in player list.)][unsetq(player)],[u(func`debugmsg,Player [name(%q<player>)] is not currently in the player list.)]
-&func`addplayer`add HP Bar Template=[attrib_set(me/playerlist`%q<player>,[name(%q<player>)])][iter(1 2 3,[attrib_set(me/playerlist`%q<player>`hp`%i0,O)])][u(func`msg,Added [name(%q<player>)] to player list.)]
+&func`addplayer #809=[u(func`general`checkplayer,%0)][if(%q<player>,[u(func`addplayer`checkexisting)],[u(func`msg,ERROR - Invalid player: %0)])][if(%q<player>,[u(func`addplayer`add)])]
+&func`addplayer`checkexisting #809=[if([u(func`general`checkplayerinlist)],[u(func`msg,ERROR - Player [name(%q<player>)] already exists in player list.)][unsetq(player)],[u(func`debugmsg,Player [name(%q<player>)] is not currently in the player list.)]
+&func`addplayer`add #809=[attrib_set(me/playerlist`%q<player>,[name(%q<player>)])][iter(1 2 3,[attrib_set(me/playerlist`%q<player>`hp`%i0,O)])][u(func`msg,Added [name(%q<player>)] to player list.)]
 
 
 think --- Command: +hp/addnpc ---
 
-&cmd`addnpc HP Bar Template=$+hp/addnpc *=*:think [u(func`addnpc,%0,%1)]
+&cmd`addnpc #809=$+hp/addnpc *=*:think [u(func`addnpc,%0,%1)]
 
-&func`addnpc HP Bar Template=[u(func`general`checknpc,%0)][if(%q<npc>,[u(func`msg,ERROR - NPC already exists in list: %0)],[u(func`addnpc`add,%0,%1)])]
-&func`addnpc`add HP Bar Template=[u(func`addnpc`getnewnpc)][attrib_set(me/%q<newnpc>,%0)][iter([lnum(%1)],[attrib_set(me/%q<newnpc>`hp`%i0,O)])][u(func`msg,Added %0 to NPC list.)]
-&func`addnpc`getnewnpc HP Bar Template=[setq(newnpc,NPCLIST`[add([edit([last(sort(lattr(me/npclist`*)))],NPCLIST`,)],1)])][u(func`debugmsg,New NPC is: %q<newnpc>)]
+&func`addnpc #809=[u(func`general`checknpc,%0)][if(%q<npc>,[u(func`msg,ERROR - NPC already exists in list: %0)],[u(func`addnpc`add,%0,%1)])]
+&func`addnpc`add #809=[u(func`addnpc`getnewnpc)][attrib_set(me/%q<newnpc>,%0)][iter([lnum(%1)],[attrib_set(me/%q<newnpc>`hp`%i0,O)])][u(func`msg,Added %0 to NPC list.)]
+&func`addnpc`getnewnpc #809=[setq(newnpc,NPCLIST`[add([edit([last(sort(lattr(me/npclist`*)))],NPCLIST`,)],1)])][u(func`debugmsg,New NPC is: %q<newnpc>)]
 
 think --- Command: +hp/addboss ---
 
-&cmd`addboss HP Bar Template=$+hp/addboss *=*:think [u(func`addboss,%0,%1)]
+&cmd`addboss #809=$+hp/addboss *=*:think [u(func`addboss,%0,%1)]
 
-&func`addboss HP Bar Template=[u(func`general`checkboss,%0)][if(%q<boss>,[u(func`msg,ERROR - Boss already exists in list: %0)],[u(func`addboss`add,%0,%1)])]
-&func`addboss`add HP Bar Template=[u(func`addboss`getnewboss)][attrib_set(me/%q<newboss>,%0)][iter([lnum(%1)],[attrib_set(me/%q<newboss>`hp`%i0,O)])][u(func`msg,Added %0 to boss list.)]
-&func`addboss`getnewboss HP Bar Template=[setq(newboss,BOSSLIST`[add([edit([last(sort(lattr(me/bosslist`*)))],BOSSLIST`,)],1)])][u(func`debugmsg,New boss is: %q<newboss>)]
+&func`addboss #809=[u(func`general`checkboss,%0)][if(%q<boss>,[u(func`msg,ERROR - Boss already exists in list: %0)],[u(func`addboss`add,%0,%1)])]
+&func`addboss`add #809=[u(func`addboss`getnewboss)][attrib_set(me/%q<newboss>,%0)][iter([lnum(%1)],[attrib_set(me/%q<newboss>`hp`%i0,O)])][u(func`msg,Added %0 to boss list.)]
+&func`addboss`getnewboss #809=[setq(newboss,BOSSLIST`[add([edit([last(sort(lattr(me/bosslist`*)))],BOSSLIST`,)],1)])][u(func`debugmsg,New boss is: %q<newboss>)]
 
 
 think --- Command: +hp/del ---
 
-&cmd`del HP Bar Template=$+hp/del *:think [u(func`del,%0)]
+&cmd`del #809=$+hp/del *:think [u(func`del,%0)]
 
-&func`del HP Bar Template=[u(func`general`determinetarget,%0)][if(%q<target>,[u(func`del`delete)])]
-&func`del`delete HP Bar Template=[u(func`msg,[v(%q<target>)] has been deleted from the list.)][HP Bar Templatee(me/%q<target>)]
+&func`del #809=[u(func`general`determinetarget,%0)][if(%q<target>,[u(func`del`delete)])]
+&func`del`delete #809=[u(func`msg,[v(%q<target>)] has been deleted from the list.)][#809e(me/%q<target>)]
 
 
 think --- Command: +hp/dmg ---
 
-&cmd`dmg HP Bar Template=$+hp/dmg *:think [u(func`dmg,%0)]
+&cmd`dmg #809=$+hp/dmg *:think [u(func`dmg,%0)]
 
-&func`dmg HP Bar Template=[u(func`general`determinetarget,%0)][if(%q<target>,[u(func`dmg`dodmg)])]
-&func`dmg`dodmg HP Bar Template=[iter([sort(lattr(me/%q<target>`hp`*))],[switch([v(%i0)],O,[attrib_set(me/%i0,X)][setq(dmgset,1)][u(func`debugmsg,Setting %i0 to X)][u(func`msg,Adding damage to [v(%q<target>)])][ibreak()])])][if(not(%q<dmgset>),[u(func`msg,ERROR - That target is already at max damage.)])]
+&func`dmg #809=[u(func`general`determinetarget,%0)][if(%q<target>,[u(func`dmg`dodmg)])]
+&func`dmg`dodmg #809=[iter([sort(lattr(me/%q<target>`hp`*))],[switch([v(%i0)],O,[attrib_set(me/%i0,X)][setq(dmgset,1)][u(func`debugmsg,Setting %i0 to X)][u(func`msg,Adding damage to [v(%q<target>)])][ibreak()])])][if(not(%q<dmgset>),[u(func`msg,ERROR - That target is already at max damage.)])]
 
 
 think --- Command: +hp/undmg ---
 
-&cmd`undmg HP Bar Template=$+hp/undmg *:think [u(func`undmg,%0)]
+&cmd`undmg #809=$+hp/undmg *:think [u(func`undmg,%0)]
 
-&func`undmg HP Bar Template=[u(func`general`determinetarget,%0)][if(%q<target>,[u(func`undmg`remdmg)])]
-&func`undmg`remdmg HP Bar Template=[iter([revwords(sort(lattr(me/%q<target>`hp`*)))],[switch([v(%i0)],X,[attrib_set(me/%i0,O)][setq(dmgunset,1)][u(func`debugmsg,Setting %i0 to O)][u(func`msg,Removing damage from [v(%q<target>)])][ibreak()])])][if(not(%q<dmgunset>),[u(func`msg,ERROR - That target is already at max health.)])]
+&func`undmg #809=[u(func`general`determinetarget,%0)][if(%q<target>,[u(func`undmg`remdmg)])]
+&func`undmg`remdmg #809=[iter([revwords(sort(lattr(me/%q<target>`hp`*)))],[switch([v(%i0)],X,[attrib_set(me/%i0,O)][setq(dmgunset,1)][u(func`debugmsg,Setting %i0 to O)][u(func`msg,Removing damage from [v(%q<target>)])][ibreak()])])][if(not(%q<dmgunset>),[u(func`msg,ERROR - That target is already at max health.)])]
 
 
 think --- Command: +hp/dc ---
 
-&cmd`setdc HP Bar Template=$+hp/dc *=*/*:think [u(func`setdc,%0,%1,%2)]
+&cmd`setdc #809=$+hp/dc *=*/*:think [u(func`setdc,%0,%1,%2)]
 
-&func`setdc HP Bar Template=[u(func`general`checkboss,%0)][setq(defdc,%1,hitdc,%2)])][if(%q<boss>,[if(and(%q<defdc>,%q<hitdc>),[u(func`setdc`set)],[u(func`msg,ERROR - Invalid hit or def dc. Must be a number.)])],[u(func`msg,ERROR - Could not find a boss by the name: %0)])]
-&func`setdc`set HP Bar Template=[attrib_set(me/%q<boss>`dc`def,%q<defdc>)][attrib_set(me/%q<boss>`dc`hit,%q<hitdc>)][u(func`msg,Set [v(%q<boss>)] def/hit DCs to: %q<defdc>/%q<hitdc>)]
+&func`setdc #809=[u(func`general`checkboss,%0)][setq(defdc,%1,hitdc,%2)])][if(%q<boss>,[if(and(%q<defdc>,%q<hitdc>),[u(func`setdc`set)],[u(func`msg,ERROR - Invalid hit or def dc. Must be a number.)])],[u(func`msg,ERROR - Could not find a boss by the name: %0)])]
+&func`setdc`set #809=[attrib_set(me/%q<boss>`dc`def,%q<defdc>)][attrib_set(me/%q<boss>`dc`hit,%q<hitdc>)][u(func`msg,Set [v(%q<boss>)] def/hit DCs to: %q<defdc>/%q<hitdc>)]
 
 
 think --- Command: +hp/note ---
-&cmd`note HP Bar Template=$+hp/note *=*:think [u(func`note,%0,%1)]
+&cmd`note #809=$+hp/note *=*:think [u(func`note,%0,%1)]
 
-&func`note HP Bar Template=[u(func`general`determinetarget,%0)][if(%q<target>,[setq(note,%1)][u(func`note`addnote)])]
-&func`note`addnote HP Bar Template=[attrib_set(me/%q<target>`note,%q<note>)][u(func`msg,A note has been added to [v(%q<target>)]: %q<note>)]
+&func`note #809=[u(func`general`determinetarget,%0)][if(%q<target>,[setq(note,%1)][u(func`note`addnote)])]
+&func`note`addnote #809=[attrib_set(me/%q<target>`note,%q<note>)][u(func`msg,A note has been added to [v(%q<target>)]: %q<note>)]
 
 think --- Command: +hp/clear ---
 
-&cmd`clear HP Bar Template=$+hp/clear:think [u(func`clear)]
+&cmd`clear #809=$+hp/clear:think [u(func`clear)]
 
-&func`clear HP Bar Template=[HP Bar Templatee(me/playerlist)][HP Bar Templatee(me/npclist)][HP Bar Templatee(me/bosslist)][u(func`msg,All lists have been cleared!)]
+&func`clear #809=[#809e(me/playerlist)][#809e(me/npclist)][#809e(me/bosslist)][u(func`msg,All lists have been cleared!)]
 
 
 think --- Command: +hp/rules ---
 
-&cmd`rules HP Bar Template=$+hp/rules *:think [u(func`rules,%0)]
+&cmd`rules #809=$+hp/rules *:think [u(func`rules,%0)]
 
-&func`rules HP Bar Template=[attrib_set(me/desc`rules,%0)][u(func`msg,Rules have been set!)]
+&func`rules #809=[attrib_set(me/desc`rules,%0)][u(func`msg,Rules have been set!)]
 
 
 think --- Command: +hp ---
-&cmd`hp HP Bar Template=$+hp:think [pemit(%#,[u(describe)])]
+&cmd`hp #809=$+hp:think [pemit(%#,[u(describe)])]
 
 
 think --- Command: +hp/help ---
 
-&cmd`help HP Bar Template=$+hp/help:think [u(func`help)]
+&cmd`help #809=$+hp/help:think [u(func`help)]
 
-&func`help HP Bar Template=[u(func`msg,[name(me)] helpfile!%r%r[iter(lattr(me/func`help`*),[v(%i0)],%b,%r)]
-&func`help`addplayer HP Bar Template=+hp/addplayer <name> - Add a player to the player list.
-&func`help`addnpc HP Bar Template=+hp/addnpc <name>=<# of HP> - Add an NPC to the NPC list with the specified number of HP points.
-&func`help`addboss HP Bar Template=+hp/addboss <name>=<# of HP> - Add a boss to the boss list with the specified number of HP points.
-&func`help`dmg HP Bar Template=+hp/dmg <name> - Add a damage to the player/npc/boss.
-&func`help`dc HP Bar Template=+hp/dc <boss>=<defend>/<hit> - Set the DCs to defend and to hit a boss.
-&func`help`clear HP Bar Template=+hp/clear - Clears the player and boss lists.
-&func`help`rules HP Bar Template=+hp/rules <rules> - Simply adds some rules to the object description.
-&func`help`credits HP Bar Template=+hp/credits - Gives you lots and lots of credits to buy shiney things with.
-&func`help`note HP Bar Template=+hp/note <name>=<note> - Adds a note that displays below the player/npc/boss.
-&func`help`undmg HP Bar Template=+hp/undmg <name> - Remove a damage from the player/npc/boss.
+&func`help #809=[u(func`msg,[name(me)] helpfile!%r%r[iter(lattr(parent(me)/func`help`*),[v(%i0)],%b,%r)]
+&func`help`addplayer #809=+hp/addplayer <name> - Add a player to the player list.
+&func`help`addnpc #809=+hp/addnpc <name>=<# of HP> - Add an NPC to the NPC list with the specified number of HP points.
+&func`help`addboss #809=+hp/addboss <name>=<# of HP> - Add a boss to the boss list with the specified number of HP points.
+&func`help`dmg #809=+hp/dmg <name> - Add a damage to the player/npc/boss.
+&func`help`dc #809=+hp/dc <boss>=<defend>/<hit> - Set the DCs to defend and to hit a boss.
+&func`help`clear #809=+hp/clear - Clears the player and boss lists.
+&func`help`rules #809=+hp/rules <rules> - Simply adds some rules to the object description.
+&func`help`credits #809=+hp/credits - Gives you lots and lots of credits to buy shiney things with.
+&func`help`note #809=+hp/note <name>=<note> - Adds a note that displays below the player/npc/boss.
+&func`help`undmg #809=+hp/undmg <name> - Remove a damage from the player/npc/boss.
 
 
 think --- Command: +hp/credits ---
 
-&cmd`credits HP Bar Template=$+hp/credits:think [u(func`credits)]
+&cmd`credits #809=$+hp/credits:think [u(func`credits)]
 
-&func`credits HP Bar Template=[pemit(%#,--[name(me)] Credits--%rCreated by Yuuki@Elder Tale Online MUSH%rGitHub: https://github.com/VincentCross/HPBarTemplate)]
+&func`credits #809=[pemit(%#,--[name(me)] Credits--%rCreated by Yuuki@Elder Tale Online MUSH%rGitHub: https://github.com/VincentCross/HPBarTemplate)]
