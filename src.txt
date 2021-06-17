@@ -3,10 +3,14 @@
 
 think --- Description ---
 
-@desc WIP=[u(desc`playerlist`headers)]%r[iter(lattr(me/playerlist`*),[align([v(desc`playerlist`margin1)] [v(desc`playerlist`margin2)],[v(%i0)],[u(func`dmglist,%i0)])],%b,%r)][if(lattr(me/NPCLIST`*),%r%r[u(desc`npclist`headers)]%r[iter(lattr(me/npclist`*),[align([v(desc`npclist`margin1)] [v(desc`npclist`margin2)],[v(%i0)],[u(func`dmglist,%i0)])],%b,%r)])]%r%r[u(desc`bosslist`headers)]%r[iter(lattr(me/bosslist`*),[align([v(desc`bosslist`margin1)] [v(desc`bosslist`margin2)] [v(desc`bosslist`margin3)],[v(%i0)],[u(func`dmglist,%i0)],[u(func`bossdclist,%i0)])],%b,%r)]
+@desc WIP=[u(desc`playerlist`headers)]%r[iter(lattr(me/playerlist`*),[align([v(desc`playerlist`margin1)] [v(desc`playerlist`margin2)],[v(%i0)],[u(func`dmglist,%i0)])][u(desc`notes,%i0)],%b,%r)][if(lattr(me/NPCLIST`*),%r%r[u(desc`npclist`headers)]%r[iter(lattr(me/npclist`*),[align([v(desc`npclist`margin1)] [v(desc`npclist`margin2)],[v(%i0)],[u(func`dmglist,%i0)])][u(desc`notes,%i0)],%b,%r)])]%r%r[u(desc`bosslist`headers)]%r[iter(lattr(me/bosslist`*),[align([v(desc`bosslist`margin1)] [v(desc`bosslist`margin2)] [v(desc`bosslist`margin3)],[v(%i0)],[u(func`dmglist,%i0)],[u(func`bossdclist,%i0)])][u(desc`notes,%i0)],%b,%r)]
 
 
 think --- Description Layout ---
+
+&desc`notes`margin1 WIP=4
+&desc`notes`margin2 WIP=70
+&desc`notes`space WIP=3
 
 &desc`playerlist`headers WIP=[align([v(desc`playerlist`margin1)] [v(desc`playerlist`margin2)],[v(desc`playerlist`header1)],[v(desc`playerlist`header2)])]
 
@@ -30,6 +34,8 @@ think --- Description Layout ---
 &desc`bosslist`header1 WIP=Boss Name
 &desc`bosslist`header2 WIP=HP
 &desc`bosslist`header3 WIP=ToDefend / ToHit
+
+&desc`notes WIP=[if(hasattr(me,%0`NOTE),%r[align([v(desc`notes`margin1)] [v(desc`notes`margin2)],[space([v(desc`notes`space)])]-,[v(%0`NOTE)])])]
 
 &desc`rules WIP=Insert rules here with +hp/rules <rules>
 &desc`help WIP=Use +hp/help for command list
@@ -107,6 +113,12 @@ think --- Command: +hp/dc ---
 &func`setdc`set WIP=[attrib_set(me/%q<boss>`dc`def,%q<defdc>)][attrib_set(me/%q<boss>`dc`hit,%q<hitdc>)][u(func`msg,Set [v(%q<boss>)] def/hit DCs to: %q<defdc>/%q<hitdc>)]
 
 
+think --- Command: +hp/note ---
+&cmd`note WIP=$+hp/note *=*:think [u(func`note,%0,%1)]
+
+&func`note WIP=[u(func`general`determinetarget,%0)][if(%q<target>,[setq(note,%1)][u(func`note`addnote)])]
+&func`note`addnote WIP=[attrib_set(me/%q<target>`note,%q<note>)][u(func`msg,A note has been added to [v(%q<target>)]: %q<note>)]
+
 think --- Command: +hp/clear ---
 
 &cmd`clear WIP=$+hp/clear:think [u(func`clear)]
@@ -131,12 +143,14 @@ think --- Command: +hp/help ---
 
 &func`help WIP=[u(func`msg,[name(me)] helpfile!%r%r[iter(lattr(me/func`help`*),[v(%i0)],%b,%r)]
 &func`help`addplayer WIP=+hp/addplayer <name> - Add a player to the player list.
+&func`help`addnpc WIP=+hp/addnpc <name>=<# of HP> - Add an NPC to the NPC list with the specified number of HP points.
 &func`help`addboss WIP=+hp/addboss <name>=<# of HP> - Add a boss to the boss list with the specified number of HP points.
-&func`help`dmg WIP=+hp/dmg <target> - Add a damage to either a player or a boss.
+&func`help`dmg WIP=+hp/dmg <target> - Add a damage to the player/npc/boss.
 &func`help`dc WIP=+hp/dc <boss>=<defend>/<hit> - Set the DCs to defend and to hit a boss.
 &func`help`clear WIP=+hp/clear - Clears the player and boss lists.
 &func`help`rules WIP=+hp/rules <rules> - Simply adds some rules to the object description.
 &func`help`credits WIP=+hp/credits - Gives you lots and lots of credits to buy shiney things with.
+&func`help`note WIP=+hp/note <name>=<note> - Adds a note that displays below the player/npc/boss.
 
 
 think --- Command: +hp/credits ---
