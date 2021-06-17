@@ -163,6 +163,7 @@ think --- Command: +hp/help ---
 &func`help`note #809=+hp/note <name>=<note> - Adds a note that displays below the player/npc/boss.
 &func`help`undmg #809=+hp/undmg <name> - Remove a damage from the player/npc/boss.
 &func`help`hp #809=+hp - Simply shows what you see when you type 'look [name(me)]'
+&func`help`del #809=+hp/del <name> - Removes specified player/npc/boss from list.
 
 
 think --- Command: +hp/credits ---
