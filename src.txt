@@ -149,6 +149,12 @@ think --- Command: +hp ---
 &cmd`hp #809=$+hp:think [pemit(%#,[u(describe)])]
 
 
+think --- Command: +hp/rename <oldname>=<newname>
+&cmd`rename #809=$+hp/rename *=*:think [u(func`rename,%0,%1)]
+
+&func`rename #809=[u(func`general`determinetarget,%0)][if(%q<target>,[u(func`rename`dorename,%0,%1)])]
+&func`rename`dorename #809=[attrib_set(me/%q<target>,%1)][u(func`msg,Entity '%0' has been renamed to '%1')]
+
 think --- Command: +hp/help ---
 
 &cmd`help #809=$+hp/help:think [u(func`help)]
@@ -166,6 +172,7 @@ think --- Command: +hp/help ---
 &func`help`undmg #809=+hp/undmg <name> - Remove a damage from the player/npc/boss.
 &func`help`hp #809=+hp - Simply shows what you see when you type 'look [name(me)]'
 &func`help`del #809=+hp/del <name> - Removes specified player/npc/boss from list.
+&func`help`rename #809=+hp/rename <oldname>=<newname> - Renames specified player/npc/boss.
 
 
 think --- Command: +hp/credits ---
